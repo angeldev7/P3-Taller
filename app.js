@@ -2,7 +2,7 @@ const btnEvaluar = document.getElementById("btnEvaluar");
 const btnLimpiar = document.getElementById("btnLimpiar");
 btnEvaluar.addEventListener("click", evaluarEstudiante);
 btnLimpiar.addEventListener("click", limpiarFormulario);
-
+let estudiantes = [];
 function evaluarEstudiante() {
 
     const nombre = document.getElementById("nombre").value.trim();
@@ -26,6 +26,7 @@ function evaluarEstudiante() {
     }
     const promedio = calcularPromedio(notas);
     const estado = clasificarEstado(promedio);
+
     const estudiante = {
         nombre: nombre,
         carrera: carrera,
@@ -33,9 +34,10 @@ function evaluarEstudiante() {
         promedio: promedio,
         estado: estado,
     };
+    estudiantes.push(estudiante);
     mostrarResultado(construirMensaje(estudiante), obtenerColorEstado(estado), mostrarBeca(estudiante));
-    mostrarJSON(estudiante);
-    console.table(estudiante);
+    mostrarJSON(estudiantes);
+    limpiarcampos();
 }
 function calcularPromedio(notas) {
     let suma = 0;
@@ -90,6 +92,14 @@ function mostrarJSON(estudiante) {
     const salida = document.getElementById("salidaJSON");
     salida.classList.remove("d-none");
     salida.innerHTML = JSON.stringify(estudiante, null, 2);
+}
+function limpiarcampos() {
+    document.getElementById("nombre").value = "";
+    document.getElementById("carrera").value = "";
+    document.getElementById("nota1").value = "";
+    document.getElementById("nota2").value = "";
+    document.getElementById("nota3").value = "";
+    document.getElementById("nota4").value = "";
 }
 function limpiarFormulario() {
     document.getElementById("nombre").value = "";
